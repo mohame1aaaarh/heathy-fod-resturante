@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <!-- Primary Meta Tags -->
+    <title>La Prama - لو الدايت بقي دراما .. الحل في لابراما</title>
+    <meta name="title" content="La Prama - لو الدايت بقي دراما .. الحل في لابراما">
+    <meta name="description" content="لو الدايت بقي دراما .. الحل في لابراما. نقدم أشهى الوجبات الصحية في المنصورة. اطلب أونلاين واستمتع بأطعم وألذ وجبات الدايت.">
+    <meta name="keywords" content="healthy food, diet, restaurant, delivery, mansoura, أكل صحي, دايت, مطعم, توصيل, المنصورة, لابراما, La Prama">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Arabic">
+    <meta name="author" content="La Prama">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://la-prama.com/">
+    <meta property="og:title" content="La Prama - لو الدايت بقي دراما .. الحل في لابراما">
+    <meta property="og:description" content="لو الدايت بقي دراما .. الحل في لابراما. نقدم أشهى الوجبات الصحية في المنصورة.">
+    <meta property="og:image" content="/logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://la-prama.com/">
+    <meta property="twitter:title" content="La Prama - لو الدايت بقي دراما .. الحل في لابراما">
+    <meta property="twitter:description" content="لو الدايت بقي دراما .. الحل في لابراما. نقدم أشهى الوجبات الصحية في المنصورة.">
+    <meta property="twitter:image" content="/logo.png">
+
+    <!-- We keep Tailwind CDN for simplicity as requested, though building it is better for production -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&amp;family=Bebas+Neue&amp;family=Kaushan+Script&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2d9f5e",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#0f1a14",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "sans-serif"],
+                        "logo": ["Bebas Neue", "cursive"],
+                        "script": ["Kaushan Script", "cursive"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .font-logo {
+            font-family: 'Bebas Neue', cursive;
+        }
+        .font-script {
+            font-family: 'Kaushan Script', cursive;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* RTL-specific utility to fix icon directions if needed */
+        .rtl-flip {
+            transform: scaleX(-1);
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.90.1"
+  }
+}
+</script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#181112] dark:text-white font-display">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
