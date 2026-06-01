@@ -134,7 +134,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ item, categoryConfig, 
                     ? 'bg-gray-300 cursor-not-allowed shadow-none' 
                     : isAdded 
                         ? 'bg-green-500 shadow-green-500/30' 
-                        : 'bg-primary shadow-primary/30 hover:bg-red-600'
+                        : 'bg-primary shadow-primary/30 hover:bg-[#4A5D2E]'
                 }`}
           >
             <span className={`material-symbols-outlined font-black text-lg md:text-2xl transition-transform duration-300 ${isAdded ? 'rotate-[-360deg]' : ''}`}>

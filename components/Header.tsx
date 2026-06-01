@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, cartCou
 
           {/* Action Buttons */}
           <div className="flex items-center gap-3 md:gap-4">
-            <button className="flex min-w-[auto] sm:min-w-[130px] items-center justify-center gap-2 rounded-full h-10 md:h-11 px-4 md:px-6 bg-primary text-white text-sm md:text-base font-black transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-red-600">
+            <button className="flex min-w-[auto] sm:min-w-[130px] items-center justify-center gap-2 rounded-full h-10 md:h-11 px-4 md:px-6 bg-primary text-white text-sm md:text-base font-black transition-transform active:scale-95 shadow-lg shadow-primary/20 hover:bg-[#4A5D2E]">
               <span className="material-symbols-outlined text-sm md:text-base">call</span>
               <span className="dir-ltr text-sm md:text-base">01554400554</span>
             </button>

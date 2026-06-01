@@ -27,7 +27,7 @@ export const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemove, o
         <p className="text-gray-500 text-lg mb-8 max-w-md">يبدو أنك لم تضف أي وجبات لذيذة بعد. تصفح القائمة واشبع جوعك.</p>
         <button 
           onClick={() => onNavigate('menu')}
-          className="bg-primary text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-red-600 transition-colors shadow-lg shadow-primary/30"
+          className="bg-primary text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-[#4A5D2E] transition-colors shadow-lg shadow-primary/30"
         >
           تصفح القائمة
         </button>
@@ -149,7 +149,7 @@ export const Cart: React.FC<CartProps> = ({ items, onUpdateQuantity, onRemove, o
 
             <button 
               onClick={() => onNavigate('checkout')}
-              className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-red-600 shadow-xl shadow-primary/20 transition-all active:scale-95 flex justify-center items-center gap-2"
+              className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-[#4A5D2E] shadow-xl shadow-primary/20 transition-all active:scale-95 flex justify-center items-center gap-2"
             >
               <span>متابعة الشراء</span>
               <span className="material-symbols-outlined rtl-flip">arrow_back</span>

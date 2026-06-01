@@ -815,7 +815,7 @@ export const AdminDashboard: React.FC = () => {
                                 </div>
 
                                 <div className="md:col-span-2 flex gap-4 pt-4">
-                                    <button type="submit" className={`flex-1 text-white py-4 rounded-xl font-bold text-lg shadow-xl transition-transform active:scale-95 ${editingProductId ? 'bg-blue-600 hover:bg-blue-700' : 'bg-primary hover:bg-red-600'}`}>
+                                    <button type="submit" className={`flex-1 text-white py-4 rounded-xl font-bold text-lg shadow-xl transition-transform active:scale-95 ${editingProductId ? 'bg-blue-600 hover:bg-blue-700' : 'bg-primary hover:bg-[#4A5D2E]'}`}>
                                         {editingProductId ? 'حفظ التعديلات' : 'إضافة المنتج الآن'}
                                     </button>
                                     <button type="button" onClick={handleCancelEditProduct} className="px-6 py-4 rounded-xl font-bold bg-gray-100 text-gray-600 hover:bg-gray-200">

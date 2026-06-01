@@ -11,24 +11,28 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         {/* Text Content */}
         <div className="flex flex-col gap-4 md:gap-6 lg:gap-8 order-2 lg:order-1 text-right">
           <div className="flex flex-col relative z-10">
-            {/* Tagline */}
-            <span className="text-primary font-black uppercase tracking-widest text-xs md:text-sm animate-pulse mb-1 md:mb-2 inline-block">
-              لو الدايت بقي دراما .. الحل في لابراما
-            </span>
+            {/* La Prama Brand Mark - Decorative */}
+            <div className="flex items-center gap-2 mb-2 md:mb-4">
+              <span className="w-8 h-0.5 bg-primary/40 rounded-full"></span>
+              <span className="font-italian text-primary/60 text-sm md:text-base italic tracking-wide">La Prama</span>
+            </div>
             
-            {/* Stylized Headline - Centered Block Layout */}
-            <div className="relative select-none text-center w-full mt-4 md:mt-6 lg:mt-8">
-                <span className="absolute -top-6 md:-top-10 left-0 md:left-8 font-script text-2xl md:text-4xl lg:text-5xl text-gray-300 dark:text-gray-600 transform -rotate-12 z-0 opacity-90">
-                  Healthy
-                </span>
-                <h1 className="relative z-10 font-logo font-black italic flex flex-col items-center leading-[0.8]">
-                  {/* Line 1: LA PRAMA */}
-                  <span className="block text-[4.5rem] sm:text-[7rem] md:text-[9rem] lg:text-[13.5rem] text-[#181112] dark:text-white drop-shadow-xl transform -skew-x-6 origin-bottom transition-transform hover:skew-x-0 duration-500 tracking-wide">
-                    LA PRAMA
+            {/* Stylized Headline - Slogan Focus */}
+            <div className="relative select-none text-center w-full">
+                <h1 className="relative z-10 font-logo font-black italic flex flex-col items-center leading-[0.85]">
+                  {/* Line 1: لو الدايت بقي دراما */}
+                  <span className="block text-[3.2rem] sm:text-[4.5rem] md:text-[6.5rem] lg:text-[8rem] text-[#181112] dark:text-white drop-shadow-xl transform -skew-x-6 origin-bottom transition-transform hover:skew-x-0 duration-500 tracking-wide leading-[0.85]">
+                    لو الدايت بقي
                   </span>
-                  {/* Line 2: هتبدع في الدايت */}
-                  <span className="block text-[2.8rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[8rem] text-primary drop-shadow-lg -mt-1 sm:-mt-2 md:-mt-4 lg:-mt-8 transform -skew-x-6 origin-top transition-transform hover:skew-x-0 duration-500 whitespace-nowrap tracking-tight">
-                    هتبدع في الدايت
+                  <span className="block text-[3.2rem] sm:text-[4.5rem] md:text-[6.5rem] lg:text-[8rem] text-primary drop-shadow-xl transform -skew-x-6 origin-bottom transition-transform hover:skew-x-0 duration-500 tracking-wide leading-[0.85] -mt-1 sm:-mt-2">
+                    دراما
+                  </span>
+                  {/* Line 2: الحل مع لابراما */}
+                  <span className="block text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6rem] text-[#181112] dark:text-white drop-shadow-lg mt-1 sm:mt-0 transform -skew-x-6 origin-top transition-transform hover:skew-x-0 duration-500 whitespace-nowrap tracking-tight leading-[0.85]">
+                    الحل مع
+                  </span>
+                  <span className="block text-[2.5rem] sm:text-[3.5rem] md:text-[5rem] lg:text-[6rem] text-primary drop-shadow-lg transform -skew-x-6 origin-top transition-transform hover:skew-x-0 duration-500 whitespace-nowrap tracking-tight leading-[0.85] -mt-1 sm:-mt-2">
+                    لابراما
                   </span>
                 </h1>
             </div>

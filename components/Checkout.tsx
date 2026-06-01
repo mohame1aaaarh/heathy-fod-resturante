@@ -466,7 +466,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ items, deliveryZones, onClea
             <button 
               type="submit" 
               disabled={isSubmitting || (orderType === 'delivery' && !selectedZone) || !!errors.phone || !!errors.whatsapp}
-              className={`w-full bg-primary text-white py-4 rounded-xl font-black text-xl shadow-xl shadow-primary/20 transition-all active:scale-95 mt-4 flex justify-center items-center gap-2 ${isSubmitting || (orderType === 'delivery' && !selectedZone) || !!errors.phone || !!errors.whatsapp ? 'opacity-70 cursor-not-allowed bg-gray-400 shadow-none' : 'hover:bg-red-600'}`}
+              className={`w-full bg-primary text-white py-4 rounded-xl font-black text-xl shadow-xl shadow-primary/20 transition-all active:scale-95 mt-4 flex justify-center items-center gap-2 ${isSubmitting || (orderType === 'delivery' && !selectedZone) || !!errors.phone || !!errors.whatsapp ? 'opacity-70 cursor-not-allowed bg-gray-400 shadow-none' : 'hover:bg-[#4A5D2E]'}`}
             >
               {isSubmitting ? 'جاري المعالجة...' : 'تأكيد ومتابعة على واتساب'}
             </button>
