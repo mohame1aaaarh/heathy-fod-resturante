@@ -33,7 +33,7 @@
 
     <!-- We keep Tailwind CDN for simplicity as requested, though building it is better for production -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&amp;family=Bebas+Neue&amp;family=Kaushan+Script&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&amp;family=Bebas+Neue&amp;family=Kaushan+Script&amp;family=Playfair+Display:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script>
         tailwind.config = {
@@ -48,7 +48,8 @@
                     fontFamily: {
                         "display": ["Tajawal", "sans-serif"],
                         "logo": ["Bebas Neue", "cursive"],
-                        "script": ["Kaushan Script", "cursive"]
+                        "script": ["Kaushan Script", "cursive"],
+                        "italian": ["Playfair Display", "serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "1rem",
@@ -72,6 +73,9 @@
         }
         .font-script {
             font-family: 'Kaushan Script', cursive;
+        }
+        .font-italian {
+            font-family: 'Playfair Display', serif;
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;

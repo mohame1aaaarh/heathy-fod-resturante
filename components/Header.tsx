@@ -13,9 +13,12 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentPage, cartCou
       <div className="max-w-[1280px] mx-auto px-4 md:px-6 lg:px-10 py-3 md:py-4">
         <header className="flex items-center justify-between whitespace-nowrap">
           {/* Logo Section */}
-          <div className="flex items-center">
-            <button onClick={() => onNavigate('home')} className="block hover:opacity-90 transition-opacity">
+          <div className="flex items-center gap-2 md:gap-3">
+            <button onClick={() => onNavigate('home')} className="block hover:opacity-90 transition-opacity flex items-center gap-2 md:gap-3">
               <Logo className="h-8 md:h-12 w-auto" />
+              <span className="font-italian text-primary text-xl md:text-3xl font-semibold italic tracking-tight leading-none">
+                La Prama
+              </span>
             </button>
           </div>
 

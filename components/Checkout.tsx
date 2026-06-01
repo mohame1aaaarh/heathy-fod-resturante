@@ -360,7 +360,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ items, deliveryZones, onClea
                     {/* Warning Note */}
                     <div className="bg-yellow-50 dark:bg-yellow-900/10 text-yellow-800 dark:text-yellow-200 p-3 rounded-xl text-sm mb-4 leading-relaxed border border-yellow-100 dark:border-yellow-900/30">
                         <span className="font-bold ml-1">تنبيه:</span>
-                        التوصيل متاح حالياً لأغلب مناطق محافظة الدقهلية ومدينة المنصورة. إذا لم تجد منطقتك، يرجى اختيار الاستلام من الفرع أو أقرب منطقة متاحة.
+                        التوصيل متاح لاغلب المحافظات. إذا لم تجد منطقتك، يرجى اختيار الاستلام من الفرع أو أقرب منطقة متاحة.
                     </div>
 
                     <div className="space-y-4">
