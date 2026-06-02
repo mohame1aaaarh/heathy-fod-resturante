@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { MenuItem, Order, DeliveryZone, ProductSize, Category, ProductAddon, NutritionFact } from '../../types';
 
+interface Toast {
+  id: number;
+  message: string;
+  type: 'success' | 'error' | 'loading';
+}
+
 export const AdminDashboard: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
@@ -19,7 +25,22 @@ export const AdminDashboard: React.FC = () => {
   const [products, setProducts] = useState<MenuItem[]>([]);
   const [zones, setZones] = useState<DeliveryZone[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+
+  const showToast = (message: string, type: Toast['type'] = 'success') => {
+    const id = Date.now() + Math.random();
+    setToasts(prev => [...prev, { id, message, type }]);
+    if (type !== 'loading') {
+      setTimeout(() => {
+        setToasts(prev => prev.filter(t => t.id !== id));
+      }, 3000);
+    }
+  };
+
+  const removeToast = (id: number) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  };
 
   // Forms States
   const [editingProductId, setEditingProductId] = useState<string | null>(null);
@@ -43,17 +64,14 @@ export const AdminDashboard: React.FC = () => {
       setIsAuthenticated(true);
       fetchData();
     } else {
-      alert('بيانات الدخول غير صحيحة');
+      showToast('بيانات الدخول غير صحيحة', 'error');
     }
   };
 
   const fetchData = async () => {
-    setLoading(true);
-    // Fetch Orders
     const { data: ordersData } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
     if (ordersData) setOrders(ordersData as any);
 
-    // Fetch Products
     const { data: productsData } = await supabase.from('products').select('*').order('created_at', { ascending: false });
     if (productsData) setProducts(productsData.map(p => ({
         id: p.id,
@@ -72,15 +90,13 @@ export const AdminDashboard: React.FC = () => {
         nutritionFacts: p.nutrition_facts || []
     })));
 
-    // Fetch Zones
     const { data: zonesData } = await supabase.from('delivery_zones').select('*').order('name', { ascending: true });
     if (zonesData) setZones(zonesData);
     
-    // Fetch Categories
     const { data: catsData } = await supabase.from('categories').select('*').order('sort_order', { ascending: true });
     if (catsData) setCategories(catsData);
 
-    setLoading(false);
+    setInitialLoading(false);
   };
 
   // --- ORDER ACTIONS ---
@@ -90,6 +106,9 @@ export const AdminDashboard: React.FC = () => {
     const { error } = await supabase.from('orders').update({ status: newStatus }).eq('id', orderId);
     if (!error) {
         setOrders(orders.map(o => o.id === orderId ? { ...o, status: newStatus as any } : o));
+        showToast('تم تحديث حالة الطلب بنجاح');
+    } else {
+        showToast('حدث خطأ أثناء تحديث الطلب', 'error');
     }
   };
 
@@ -99,6 +118,9 @@ export const AdminDashboard: React.FC = () => {
     const { error } = await supabase.from('orders').delete().eq('id', orderId);
     if (!error) {
         setOrders(orders.filter(o => o.id !== orderId));
+        showToast('تم حذف الطلب بنجاح');
+    } else {
+        showToast('حدث خطأ أثناء حذف الطلب', 'error');
     }
   };
 
@@ -113,7 +135,7 @@ export const AdminDashboard: React.FC = () => {
   // --- PRODUCT ACTIONS ---
   const handleAddSize = () => {
     if (!tempSize.name || tempSize.price <= 0) {
-        alert('يرجى إدخال اسم وسعر صحيح للحجم');
+        showToast('يرجى إدخال اسم وسعر صحيح للحجم', 'error');
         return;
     }
     setNewProduct(prev => ({
@@ -132,7 +154,7 @@ export const AdminDashboard: React.FC = () => {
   
   const handleAddAddon = () => {
       if (!tempAddon.name || tempAddon.price <= 0) {
-          alert('يرجى إدخال اسم وسعر صحيح للإضافة/الكومبو');
+          showToast('يرجى إدخال اسم وسعر صحيح للإضافة/الكومبو', 'error');
           return;
       }
       setNewProduct(prev => ({
@@ -151,7 +173,7 @@ export const AdminDashboard: React.FC = () => {
 
   const handleAddNutritionFact = () => {
       if (!tempNutritionFact.label || !tempNutritionFact.value) {
-          alert('يرجى إدخال اسم وقيمة صحيحين للحقيقة الغذائية');
+          showToast('يرجى إدخال اسم وقيمة صحيحين للحقيقة الغذائية', 'error');
           return;
       }
       setNewProduct(prev => ({
@@ -173,7 +195,7 @@ export const AdminDashboard: React.FC = () => {
     
     // Ensure if has_sizes is enabled, we have sizes
     if (newProduct.has_sizes && (!newProduct.sizes || newProduct.sizes.length === 0)) {
-        alert('لقد قمت بتفعيل "تعدد الأحجام"، يرجى إضافة حجم واحد على الأقل.');
+        showToast('لقد قمت بتفعيل "تعدد الأحجام"، يرجى إضافة حجم واحد على الأقل.', 'error');
         return;
     }
 
@@ -213,9 +235,9 @@ export const AdminDashboard: React.FC = () => {
         setEditingProductId(null);
         setShowProductForm(false);
         fetchData();
-        alert(editingProductId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
+        showToast(editingProductId ? 'تم تحديث المنتج بنجاح' : 'تم إضافة المنتج بنجاح');
     } else {
-        alert('حدث خطأ: ' + error.message);
+        showToast('حدث خطأ: ' + error.message, 'error');
     }
   };
 
@@ -241,13 +263,21 @@ export const AdminDashboard: React.FC = () => {
       const { error } = await supabase.from('products').update({ is_available: !currentStatus }).eq('id', id);
       if (!error) {
           setProducts(products.map(p => p.id === id ? { ...p, is_available: !currentStatus } : p));
+          showToast(currentStatus ? 'تم إخفاء المنتج من الطلب' : 'المنتج متاح للطلب الآن');
+      } else {
+          showToast('حدث خطأ أثناء تغيير الحالة', 'error');
       }
   };
 
   const handleDeleteProduct = async (id: string) => {
       if(!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
       const { error } = await supabase.from('products').delete().eq('id', id);
-      if (!error) fetchData();
+      if (!error) {
+          setProducts(products.filter(p => p.id !== id));
+          showToast('تم حذف المنتج بنجاح');
+      } else {
+          showToast('حدث خطأ أثناء حذف المنتج', 'error');
+      }
   };
 
   // --- ZONE ACTIONS ---
@@ -266,6 +296,9 @@ export const AdminDashboard: React.FC = () => {
           setNewZone({ active: true });
           setEditingZoneId(null);
           fetchData();
+          showToast(editingZoneId ? 'تم تحديث المنطقة بنجاح' : 'تم إضافة المنطقة بنجاح');
+      } else {
+          showToast('حدث خطأ أثناء حفظ المنطقة', 'error');
       }
   };
 
@@ -283,14 +316,19 @@ export const AdminDashboard: React.FC = () => {
   const handleDeleteZone = async (id: string) => {
     if(!confirm('هل أنت متأكد من حذف هذه المنطقة؟')) return;
     const { error } = await supabase.from('delivery_zones').delete().eq('id', id);
-    if (!error) fetchData();
+    if (!error) {
+        setZones(zones.filter(z => z.id !== id));
+        showToast('تم حذف المنطقة بنجاح');
+    } else {
+        showToast('حدث خطأ أثناء حذف المنطقة', 'error');
+    }
   };
 
   // --- CATEGORY ACTIONS ---
   const handleSaveCategory = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!newCategory.id || !newCategory.label) {
-          alert('يرجى ملء البيانات الأساسية');
+          showToast('يرجى ملء البيانات الأساسية', 'error');
           return;
       }
       
@@ -312,9 +350,9 @@ export const AdminDashboard: React.FC = () => {
           setNewCategory({ has_spicy_option: false, sort_order: 0 });
           setEditingCategoryId(null);
           fetchData();
-          alert('تم حفظ القسم بنجاح');
+          showToast('تم حفظ القسم بنجاح');
       } else {
-          alert('خطأ في الحفظ: ' + error.message);
+          showToast('خطأ في الحفظ: ' + error.message, 'error');
       }
   };
 
@@ -326,7 +364,12 @@ export const AdminDashboard: React.FC = () => {
   const handleDeleteCategory = async (id: string) => {
       if(!confirm('هل أنت متأكد من حذف هذا القسم؟ قد يؤثر ذلك على المنتجات المرتبطة به.')) return;
       const { error } = await supabase.from('categories').delete().eq('id', id);
-      if (!error) fetchData();
+      if (!error) {
+          setCategories(categories.filter(c => c.id !== id));
+          showToast('تم حذف القسم بنجاح');
+      } else {
+          showToast('حدث خطأ أثناء حذف القسم', 'error');
+      }
   };
 
 
@@ -363,18 +406,46 @@ export const AdminDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 font-sans" dir="rtl">
+      {/* Toast Container */}
+      {toasts.length > 0 && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 w-full max-w-sm px-4">
+          {toasts.map(t => (
+            <div
+              key={t.id}
+              className={`px-4 py-3 rounded-xl shadow-xl text-white font-bold text-sm flex items-center gap-3 animate-[fadeIn_0.3s_ease-out] ${
+                t.type === 'success' ? 'bg-green-600' :
+                t.type === 'error' ? 'bg-red-500' :
+                'bg-blue-600'
+              }`}
+            >
+              {t.type === 'loading' && (
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              )}
+              {t.type === 'success' && <span className="material-symbols-outlined text-sm">check_circle</span>}
+              {t.type === 'error' && <span className="material-symbols-outlined text-sm">error</span>}
+              <span className="flex-grow">{t.message}</span>
+              <button onClick={() => removeToast(t.id)} className="opacity-70 hover:opacity-100">
+                <span className="material-symbols-outlined text-sm">close</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
       {/* Admin Header */}
       <header className="bg-white dark:bg-background-dark shadow-sm sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 className="text-xl font-black text-primary">LA PRAMA ADMIN</h1>
             <div className="flex items-center gap-4">
-               <button 
-                  onClick={fetchData} 
-                  className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700"
-               >
-                  <span className="material-symbols-outlined text-sm">refresh</span>
-                  تحديث
-               </button>
+                <button 
+                   onClick={() => { fetchData(); showToast('تم تحديث البيانات'); }} 
+                   className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-gray-200 dark:hover:bg-gray-700"
+                >
+                   <span className="material-symbols-outlined text-sm">refresh</span>
+                   تحديث
+                </button>
                <button onClick={() => setIsAuthenticated(false)} className="text-red-500 font-bold text-sm">تسجيل خروج</button>
             </div>
         </div>
@@ -401,9 +472,9 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Main Content */}
         <main className="flex-grow">
-            {loading && <div className="text-center py-10">جاري التحميل...</div>}
+            {initialLoading && <div className="text-center py-10">جاري التحميل...</div>}
             
-            {!loading && activeTab === 'orders' && (
+            {!initialLoading && activeTab === 'orders' && (
                 <div className="space-y-6">
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-black">إدارة الطلبات</h2>
@@ -561,7 +632,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
             )}
 
-            {!loading && activeTab === 'products' && (
+            {!initialLoading && activeTab === 'products' && (
                 <div className="space-y-6">
                      <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-black">إدارة المنتجات</h2>
@@ -872,7 +943,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
             )}
             
-            {!loading && activeTab === 'categories' && (
+            {!initialLoading && activeTab === 'categories' && (
                 <div className="space-y-6">
                      <div className="bg-white dark:bg-background-dark p-6 rounded-xl shadow-sm border border-primary/10">
                          <h3 className="text-xl font-black mb-4">{editingCategoryId ? 'تعديل قسم' : 'إضافة قسم جديد'}</h3>
@@ -963,7 +1034,7 @@ export const AdminDashboard: React.FC = () => {
                 </div>
             )}
 
-            {!loading && activeTab === 'zones' && (
+            {!initialLoading && activeTab === 'zones' && (
                 <div className="space-y-6">
                      <div className="bg-white dark:bg-background-dark p-6 rounded-xl shadow-sm border border-primary/10">
                         <div className="flex justify-between items-center mb-4">

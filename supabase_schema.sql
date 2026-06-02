@@ -86,27 +86,27 @@ ALTER TABLE categories ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public can read categories" ON categories;
 CREATE POLICY "Public can read categories" ON categories
   FOR SELECT USING (TRUE);
-DROP POLICY IF EXISTS "Admins can manage categories" ON categories;
-CREATE POLICY "Admins can manage categories" ON categories
-  FOR ALL USING (FALSE);
+DROP POLICY IF EXISTS "Enable all for all users" ON categories;
+CREATE POLICY "Enable all for all users" ON categories
+  FOR ALL USING (TRUE) WITH CHECK (TRUE);
 
 -- Products
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public can read visible products" ON products;
 CREATE POLICY "Public can read visible products" ON products
   FOR SELECT USING (is_hidden = FALSE);
-DROP POLICY IF EXISTS "Admins can manage products" ON products;
-CREATE POLICY "Admins can manage products" ON products
-  FOR ALL USING (FALSE);
+DROP POLICY IF EXISTS "Enable all for all users" ON products;
+CREATE POLICY "Enable all for all users" ON products
+  FOR ALL USING (TRUE) WITH CHECK (TRUE);
 
 -- Delivery Zones
 ALTER TABLE delivery_zones ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Public can read active zones" ON delivery_zones;
 CREATE POLICY "Public can read active zones" ON delivery_zones
   FOR SELECT USING (active = TRUE);
-DROP POLICY IF EXISTS "Admins can manage zones" ON delivery_zones;
-CREATE POLICY "Admins can manage zones" ON delivery_zones
-  FOR ALL USING (FALSE);
+DROP POLICY IF EXISTS "Enable all for all users" ON delivery_zones;
+CREATE POLICY "Enable all for all users" ON delivery_zones
+  FOR ALL USING (TRUE) WITH CHECK (TRUE);
 
 -- Orders
 ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
@@ -116,9 +116,9 @@ CREATE POLICY "Public can insert orders" ON orders
 DROP POLICY IF EXISTS "Public can read own orders" ON orders;
 CREATE POLICY "Public can read own orders" ON orders
   FOR SELECT USING (TRUE);
-DROP POLICY IF EXISTS "Admins can manage orders" ON orders;
-CREATE POLICY "Admins can manage orders" ON orders
-  FOR ALL USING (FALSE);
+DROP POLICY IF EXISTS "Enable all for all users" ON orders;
+CREATE POLICY "Enable all for all users" ON orders
+  FOR ALL USING (TRUE) WITH CHECK (TRUE);
 
 -- ============================================================
 -- SEED DATA - Categories
